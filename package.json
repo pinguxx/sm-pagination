@@ -1,6 +1,6 @@
 {
   "name": "sm-pagination",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "mithril semantic-ui pagination widget",
   "main": "Pagination.js",
   "scripts": {

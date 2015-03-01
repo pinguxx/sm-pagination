@@ -2,7 +2,7 @@
 var Pagination = function () {
     'use strict';
     var pagination = {},
-        m = window.m || require("mithril");
+        m = window.m || require("mithril/mithril");
 
     pagination.goToPage = function (pageNumber) {
         m.startComputation();

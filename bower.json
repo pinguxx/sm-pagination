@@ -1,0 +1,29 @@
+{
+  "name": "sm-pagination",
+  "version": "0.0.1",
+  "homepage": "https://github.com/pinguxx/sm-pagination",
+  "authors": [
+    "Ivan Torres <pinguxx@gmail.com>"
+  ],
+  "description": "mithril semantic-ui pagination widget",
+  "main": "Pagination.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "semantic-ui",
+    "mithril",
+    "pagination"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "mithril": "~0.1.30"
+  }
+}

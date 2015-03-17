@@ -9,7 +9,7 @@
     for (i = 0; i < 100; i += 1) {
         array.push({
             id: i,
-            name: i + 'name'
+            name: 'name ' + i
         });
     }
 
@@ -58,7 +58,8 @@
                     ])
                 ]),
             ]),
-            pagination2.buildPagination()
+            pagination2.buildPagination(),
+            m('.ui.segment.basic', 'hola')
         ]);
     };
 

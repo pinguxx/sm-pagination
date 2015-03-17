@@ -15,7 +15,6 @@ var Pagination = function () {
             i,
             activeClass = pagination.classes ? (pagination.classes.activeClass || 'active') : 'active',
             itemClass = pagination.classes ? (pagination.classes.itemClass || 'item') : 'item';
-        //TODO: define and merge pagination active class from properties
         //:( super ugly code for pagination
         function renderNumber(i, next, text, claz, withClick) {
             return m("a", {
@@ -79,7 +78,6 @@ var Pagination = function () {
             iconItemClass = pagination.classes ? (pagination.classes.iconItemClass || 'icon item') : 'icon item',
             disabledClass = pagination.classes ? (pagination.classes.disabledClass || 'disabled') : 'disabled',
             menuClass = pagination.classes ? (pagination.classes.menuClass || 'ui pagination menu small') : 'ui pagination menu small';
-        //TODO: define and merge pagination
         return [
             m('p', {
                     style: 'text-align:center;margin-top:10px;',
@@ -122,14 +120,18 @@ var Pagination = function () {
 
     pagination.calculatePagination = function (data, rowsperpage, clazobj) {
         pagination.data = data;
-        pagination.currentpage = pagination.currentpage || 1;
-        pagination.latest = (rowsperpage * pagination.currentpage) - rowsperpage;
+        pagination.currentpage = pagination.oldpage || pagination.currentpage || 1;
         pagination.pages = Math.ceil(data.length / rowsperpage);
+        if (pagination.currentpage > pagination.pages) {
+            pagination.oldpage = pagination.currentpage;
+            pagination.currentpage = pagination.pages;
+        } else {
+            pagination.oldpage = null;
+        }
+        pagination.latest = (rowsperpage * pagination.currentpage) - rowsperpage;
         pagination.rowsperpage = rowsperpage;
         pagination.classes = clazobj;
     };
-
-    //pagination.calculatePagination(data, rowsperpage);
 
     return pagination;
 };

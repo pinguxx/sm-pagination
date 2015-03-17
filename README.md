@@ -6,6 +6,7 @@ It requires mithril and semantic-ui-menu
 
 Pagination file can be used with any common.js it is expect for mithril to be in global (m variable) or it will attempt to load it with `require('mithril')`, [webpack](http://webpack.github.io/docs/) its recommended
 
+![Example](pagination_example.png)
 
 ## Code Example
 

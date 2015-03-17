@@ -1,6 +1,6 @@
 {
   "name": "sm-pagination",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "mithril semantic-ui pagination widget",
   "main": "Pagination.js",
   "scripts": {
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/pinguxx/sm-pagination/issues"
   },
-  "homepage": "https://github.com/pinguxx/sm-pagination"
+  "homepage": "https://github.com/pinguxx/sm-pagination",
+  "dependencies": {
+    "mithril": "~0.1.30"
+  }
 }

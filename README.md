@@ -4,13 +4,13 @@ Basic pagination for mithril and semantic
 
 It requires mithril and semantic-ui-menu
 
-Pagination file can be used with any common.js it is expect for mithril to be in global (m variable) or it will attempt to load it with `require('mithril')`, [webpack](http://webpack.github.io/docs/) its recommended
+Pagination file can be used with any common.js it is expect for [mithril](https://github.com/lhorie/mithril.js) to be in global (m variable) or it will attempt to load it with `require('mithril')`, [webpack](http://webpack.github.io/docs/) its recommended
 
 ![Example](pagination_example.png)
 
-## Code Example
+## Demo
 
-See complete code in test.html/js
+[Demo](http://pinguxx.github.io/sm-pagination/)
 
 ```html
 <!DOCTYPE html>

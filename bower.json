@@ -1,6 +1,6 @@
 {
   "name": "sm-pagination",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "homepage": "https://github.com/pinguxx/sm-pagination",
   "authors": [
     "Ivan Torres <pinguxx@gmail.com>"
@@ -24,6 +24,6 @@
     "tests"
   ],
   "dependencies": {
-    "mithril": "~0.1.30"
+    "mithril": "~0.2.0"
   }
 }

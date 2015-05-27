@@ -1,4 +1,5 @@
 /*global m, Pagination, window*/
+'use strict';
 (function (m, Pagination) {
     var array = [],
         i,
@@ -11,29 +12,14 @@
         });
     }
 
-    module.controller = function () {
-        module.vm.init();
-        this.pagination = Pagination({
-            data: module.vm.data,
-            rowsperpage: module.vm.rowsperpage,
-            pagerender: list,
-            wrapperclass: 'ui grid page'
-        });
-        this.paginationCtrl = new this.pagination.controller();
-    };
-
-    module.vm = {};
-    module.vm.init = function () {
-        this.data = array;
-        this.rowsperpage = 10;
-    };
-
     function list(data) {
         //pagination.controller.calculatePagination(data, module.vm.rowsperpage);
         //var cdata = data.slice(pagination.latest, pagination.rowsperpage * pagination.currentpage);
         return m('.ui.segment.sixteen.wide.column', [
             m('ul.ui.bulleted.list', data.map(function (item) {
-            return m('li', item.name);
+                return m('li', {
+                    key: item.id
+                }, item.name);
             }))
         ]);
     }
@@ -44,7 +30,9 @@
         return m('.ui.sixteen.wide.column', [
             m('table.ui.table', [
                 m('tbody', data.map(function (item) {
-                    return m('tr', [
+                    return m('tr', {
+                        key: item.id
+                    }, [
                         m('td', item.id),
                         m('td', item.name)
                     ]);
@@ -53,22 +41,58 @@
         ]);
     }
 
+    module.controller = function () {
+        module.vm.init();
+        this.pagination = m.component(Pagination, {
+            data: module.vm.data,
+            rowsperpage: module.vm.rowsperpage,
+            pagerender: list,
+            wrapperclass: 'column'
+        });
+        this.paginationCtrl = new this.pagination.controller();
+    };
+
+    module.vm = {};
+    module.vm.init = function () {
+        this.data = array;
+        this.rowsperpage = 10;
+        this.page = m.prop(3);
+    };
+
+
     module.view = function (ctrl) {
-        return m('.ui.grid.page', [
+        return m('.ui.grid.page.one.column', [
             m('h1', 'Pagination'),
-            Pagination({
+            m.component(Pagination, {
                 data: module.vm.data,
                 rowsperpage: module.vm.rowsperpage,
                 pagerender: list,
-                wrapperclass: 'ui grid page'
+                wrapperclass: 'column',
+                page: module.vm.page
             }),
-            Pagination({
+            m.component(Pagination, {
                 data: module.vm.data,
                 rowsperpage: module.vm.rowsperpage,
                 pagerender: table,
-                wrapperclass: 'ui grid page'
+                wrapperclass: 'column'
             }),
-            ctrl.pagination.view(ctrl.paginationCtrl)
+            m('.row', [
+                m('.column', [
+                    m('br')
+                ])
+            ]),
+            ctrl.pagination.view(ctrl.paginationCtrl),
+            m('.row', [
+                m('.column', [
+                    m('button.ui.button', {
+                        onclick: function () {
+                            module.vm.data.splice(30, 10);
+                            ctrl.paginationCtrl.goToPage(4);
+                            module.vm.page(4);
+                        }
+                    }, 'go to page 3')
+                ])
+            ])
         ]);
     };
 

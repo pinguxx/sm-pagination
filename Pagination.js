@@ -8,7 +8,9 @@ classes = {
     rightIconClass: 'right arrow icon',
     iconItemClass: 'icon item',
     disabledClass: 'disabled',
-    menuClass: 'ui pagination menu small'
+    menuClass: 'ui pagination menu small',
+    activeClass: 'active',
+    itemClass: 'item'
 };
 
 /*
@@ -102,8 +104,8 @@ var Pagination = {
         pagination.buildNumbers = function () {
             var numbers = [],
                 i,
-                activeClass = pagination.classes ? (pagination.classes.activeClass || 'active') : 'active',
-                itemClass = pagination.classes ? (pagination.classes.itemClass || 'item') : 'item';
+                activeClass = pagination.classes.activeClass,
+                itemClass = pagination.classes.itemClass;
             //:( super ugly code for pagination
             function renderNumber(next, text, claz, withClick) {
                 return m('a', {
@@ -128,14 +130,22 @@ var Pagination = {
 
             function centerButtons() {
                 if (i < 3) {
-                    numbers.push(renderNumber((i === 2 ? (pagination.currentpage - 4) : i), (i === 2 ? '...' : 1), '', true));
+                    if (i === 2) {
+                        numbers.push(renderNumber(pagination.currentpage - 4, '...', '', true));
+                    } else {
+                        numbers.push(renderNumber(i, 1, '', true));
+                    }
                     return;
                 }
                 if (i < pagination.currentpage - 1 || (i > pagination.currentpage + 1 && i <= pagination.pages - 2)) {
                     return;
                 }
                 if (i >= pagination.pages - 2) {
-                    numbers.push(renderNumber((pagination.pages - 1 === i ? (pagination.currentpage + 4) : i), (pagination.pages - 1 === i ? '...' : i), '', true));
+                    if (pagination.pages - 1 === i) {
+                        numbers.push(renderNumber(pagination.currentpage + 4, '...', '', true));
+                    } else {
+                        numbers.push(renderNumber(i, i, '', true));
+                    }
                     return;
                 }
                 numbers.push(renderNumber(i, i, activeClass, pagination.currentpage !== i));

@@ -13,8 +13,6 @@
     }
 
     function list(data) {
-        //pagination.controller.calculatePagination(data, module.vm.rowsperpage);
-        //var cdata = data.slice(pagination.latest, pagination.rowsperpage * pagination.currentpage);
         return m('.ui.segment.sixteen.wide.column', [
             m('ul.ui.bulleted.list', data.map(function (item) {
                 return m('li', {
@@ -25,8 +23,6 @@
     }
 
     function table(data) {
-        //pagination2.calculatePagination(data, module.vm.rowsperpage);
-        //var cdata = data.slice(pagination2.latest, pagination2.rowsperpage * pagination2.currentpage);
         return m('.ui.sixteen.wide.column', [
             m('table.ui.table', [
                 m('tbody', data.map(function (item) {

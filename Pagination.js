@@ -183,12 +183,16 @@ var Pagination = {
 	},
 	view: function (ctrl, args) {
 		var pagination = ctrl,
-			to;
+			to,
+            toRender;
 		to = parseViewParameters(pagination, args);
+        pagination.start(args);
+        toRender = pagination.data.slice(pagination.latest, pagination.rowsperpage * pagination.currentpage);
 		return m('div', {
 			'class': pagination.wrapperclass || 'ui grid'
 		}, [
-            ctrl.pagerender(pagination.data.slice(pagination.latest, pagination.rowsperpage * pagination.currentpage)),
+            ctrl.pagerender(toRender),
+            pagination.pages > 1 ?
             m('p', {
 				style: 'text-align:center;margin-top:10px;font-size:.875rem;'
 			}, [
@@ -224,7 +228,7 @@ var Pagination = {
 						})
                     ])
                 ])
-            ])
+            ]) : ''
         ]);
 	}
 };

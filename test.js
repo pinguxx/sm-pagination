@@ -64,11 +64,11 @@
                 rowsperpage: module.vm.rowsperpage,
                 pagerender: list,
                 wrapperclass: 'column',
-                page: module.vm.page,
+                page: module.vm.page/*,
                 classes: {
                     leftIconClass: 'glyphicon glyphicon-arrow-left',
                     rightIconClass: 'glyphicon glyphicon-arrow-right'
-                }
+                }*/
             }),
             m.component(Pagination, {
                 data: module.vm.data,

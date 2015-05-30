@@ -1,6 +1,6 @@
 # sm-pagination
 
-Basic pagination for mithril and semantic
+Basic pagination for mithril and semantic, it can also be used with bootstrap (3+)
 
 It requires mithril and semantic-ui-menu
 
@@ -131,3 +131,13 @@ It accepts the following properties
     * **iconItemClass**, applied to the icon item items, defaults `icon item`,
     * **disabledClass**, applied to disaled items, defaults `disabled`
     * **menuClass**, applied to the menu pagination parent div, defaults `ui pagination menu small`
+
+## Bootstrap
+To make it look good with bootstrap just pass the followin classes, tested with bootstrap 3+
+
+```
+classes: {
+    leftIconClass: 'glyphicon glyphicon-arrow-left',
+    rightIconClass: 'glyphicon glyphicon-arrow-right'
+}
+```

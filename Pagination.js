@@ -10,7 +10,8 @@ classes = {
 	disabledClass: 'disabled',
 	menuClass: 'ui pagination menu small',
 	activeClass: 'active',
-	itemClass: 'item'
+	itemClass: 'item',
+    wrapperclass: 'ui grid'
 };
 
 /*
@@ -71,6 +72,23 @@ function getCurrentPage(pagination, args) {
 	pagination.currentpage = page || pagination.oldpage || pagination.currentpage || 1;
 }
 
+function cornerBtn(pagination, pageFlag, iconClass, increment) {
+    return m('li', {
+        'class': pagination.classes.iconItemClass,
+        style: (pageFlag ? '' : 'cursor:pointer;'),
+        onclick: pageFlag ? {} : function (e) {
+            e.preventDefault();
+            pagination.goToPage((pagination.currentpage + increment) || 1);
+        }
+    }, [
+        m('a', [
+            m('i', {
+                'class': iconClass + ' ' + (pageFlag ? pagination.classes.disabledClass : '')
+            })
+        ])
+    ]);
+}
+
 var Pagination = {
 	controller: function (cargs) {
 		var pagination = this;
@@ -110,13 +128,16 @@ var Pagination = {
 				itemClass = pagination.classes.itemClass;
 			//:( super ugly code for pagination
 			function renderNumber(next, text, claz, withClick) {
-				return m('a', {
-					'class': itemClass + ' ' + (!withClick ? claz : ''),
-					onclick: withClick ? function (e) {
-						e.preventDefault();
-						pagination.goToPage(next);
-					} : {}
-				}, text);
+				return m('li', {
+                    'class': itemClass + ' ' + (!withClick ? claz : ''),
+                    style: 'cursor:pointer;',
+                    onclick: withClick ? function (e) {
+                        e.preventDefault();
+                        pagination.goToPage(next);
+                    } : {}
+                }, [
+                    m('a', text)
+                ]);
 			}
 
 			function leftButtons() {
@@ -183,48 +204,33 @@ var Pagination = {
 	},
 	view: function (ctrl, args) {
 		var pagination = ctrl,
-			to;
+			to,
+            toRender;
 		to = parseViewParameters(pagination, args);
+        pagination.start(args);
+        toRender = pagination.data.slice(pagination.latest, pagination.rowsperpage * pagination.currentpage);
 		return m('div', {
-			'class': pagination.wrapperclass || 'ui grid'
+			'class': pagination.wrapperclass
 		}, [
-            ctrl.pagerender(pagination.data.slice(pagination.latest, pagination.rowsperpage * pagination.currentpage)),
+            ctrl.pagerender(toRender),
+            pagination.pages > 1 ?
             m('p', {
-				style: 'text-align:center;margin-top:10px;font-size:.875rem;'
+				style: 'text-align:center;margin-top:10px;'
 			}, [
                 m('p', (pagination.latest + 1) +
 					' - ' +
 					(to <= pagination.data.length ? to : pagination.data.length) +
 					' of ' + pagination.data.length
 				),
-                m('div', {
-					'class': pagination.classes.menuClass
+                m('ul', {
+					'class': pagination.classes.menuClass,
+                    style: 'padding-left:0;'
 				}, [
-                    m('a', {
-						'class': pagination.classes.iconItemClass + ' ' + (pagination.currentpage < 2 ? pagination.classes.disabledClass : ''),
-						onclick: pagination.currentpage < 2 ? {} : function (e) {
-							e.preventDefault();
-							pagination.goToPage((pagination.currentpage - 1) || 1);
-						}
-					}, [
-                        m('i', {
-							'class': pagination.classes.leftIconClass
-						})
-                    ]),
+                    cornerBtn(pagination, pagination.currentpage < 2, pagination.classes.leftIconClass, -1),
                     pagination.buildNumbers(),
-                    m('a', {
-						'class': pagination.classes.iconItemClass + ' ' + (pagination.currentpage >= pagination.pages ? pagination.classes.disabledClass : ''),
-						onclick: pagination.currentpage >= pagination.pages ? {} : function (e) {
-							e.preventDefault();
-							pagination.goToPage(pagination.currentpage + 1);
-						}
-					}, [
-                        m('i', {
-							'class': pagination.classes.rightIconClass
-						})
-                    ])
+                    cornerBtn(pagination, pagination.currentpage >= pagination.pages, pagination.classes.rightIconClass, 1)
                 ])
-            ])
+            ]) : ''
         ]);
 	}
 };
